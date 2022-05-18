@@ -1,0 +1,48 @@
+<!-- Source: https://salesforce.stackexchange.com/questions/293823/how-to-efficiently-ingest-json-and-write-it-to-a-data-extension-marketing-cloud -->
+<!-- What we are doing here? Essentially we're getting weather from https://openweathermap.org/ and ingesting this data into a data extension and keeping it up to date. -->
+<!-- This is tested on a cloudpage -->
+<!-- Then it is brought into a script activity or an email -->
+<!DOCTYPE html>
+<html>
+<body>
+    <script runat="server">
+        Platform.Load("Core", "1")
+        
+        // Here are the docs which contain a city list - https://openweathermap.org/api/geocoding-api
+        baseUrl = 'api.openweathermap.org/data/2.5/weather'
+        location = '?q=London,uk'        
+        apiKey = '&APPID={APIKEY}'
+        
+        var url = baseUrl + location + apiKey;
+
+        Write(url);
+
+
+        var response = HTTP.Get(url)
+
+        Write(Platform.Function.Stringify(response))
+        
+        // var array = Platform.Function.ParseJSON(response.Content);
+        
+        // var storesDE = "THIS IS A DATA EXTENSION NAME WHICH CONTAINS THE FIELDS: storeID,Name";
+        
+        // var numberofStores = array.page.length;
+        // Write(array.page.length);
+                
+        // for (var i = 0; i < numberofStores; i++) {
+        //     var storeID = array.page[i].storeID;
+        //     var name = array.page[i].name;
+        //     //Write(img_url);
+        //     var rows = Platform.Function.UpsertData(storesDE,["storeID"],[storeID],["name"],[name]);
+        // }
+        
+        //Write(response.Status + '<br />');
+        //Write(response.Content);
+        
+        </script>
+</body>
+</html>
+
+
+
+
